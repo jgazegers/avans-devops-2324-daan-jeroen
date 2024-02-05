@@ -20,6 +20,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        path: week1
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
@@ -29,6 +31,7 @@ jobs:
       run: test -f package-lock.json
     - name: Install dependencies and run tests
       run: |
+        npm cd week1
         npm ci
         npm run build --if-present
         npm test
