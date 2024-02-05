@@ -25,6 +25,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        working-directory: /week1
     - name: Check if lock file exists
       run: test -f package-lock.json
     - name: Install dependencies and run tests
