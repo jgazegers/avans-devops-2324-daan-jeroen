@@ -1,10 +1,10 @@
 const {MongoClient} = require("mongodb");
 
-const uri = process.env.MONGO_URL;
+const uri = "mongodb://mongodb:27017"
 
 const client = new MongoClient(uri);
 
-const db = client.db(process.env.DB_NAME ?? "mydb");
+const db = client.db("devops-database");
 module.exports = {
     db: db,
     client: client
