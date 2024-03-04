@@ -1,6 +1,6 @@
 const {MongoClient} = require("mongodb");
 
-const uri = "mongodb://mongodb:27017"
+const uri = "mongodb://mongo:27017"
 
 const client = new MongoClient(uri);
 

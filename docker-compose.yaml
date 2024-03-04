@@ -2,17 +2,14 @@ version: '3.8'
 
 services:
   app:
-    image: node:20
-    working_dir: '/app'
-    command: npm start
+    build: .
+    ports:
+      - '3000:3000'
     volumes:
       - './:/app:rw,cached'
       - '/app/node_modules'
     depends_on:
       - mongo
-    ports:
-      - '3000:3000'
-    entrypoint: npm install
 
   mongo:
     image: mongo

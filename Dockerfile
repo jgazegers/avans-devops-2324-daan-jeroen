@@ -1,12 +1,13 @@
-FROM node:latest
+FROM node:20
 
 WORKDIR /app
 
-COPY . .
+COPY package*.json ./
 
 RUN npm install
 
-ENV PORT=3000
-ENV MONGO_URL=mongodb://localhost:27017
+COPY . .
 
-CMD ["npm", "start"]
+EXPOSE 3000
+
+CMD ["node", "./bin/www"]
