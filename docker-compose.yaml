@@ -7,7 +7,6 @@ services:
       - '3000:3000'
     volumes:
       - './:/app:rw,cached'
-      - '/app/node_modules'
     depends_on:
       - mongo
 
@@ -19,4 +18,7 @@ services:
     ports:
       - '27017:27017'
     volumes:
-      - ./mongo_data:/data/db
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
