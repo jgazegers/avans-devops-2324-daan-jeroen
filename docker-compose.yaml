@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - '3000:3000'
+    volumes:
+      - './:/app:rw,cached'
+      - '/app/node_modules'
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=name
+      - MONGO_INITDB_ROOT_PASSWORD=word
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./mongo_data:/data/db
