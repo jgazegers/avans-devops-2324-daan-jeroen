@@ -13,5 +13,8 @@ services:
 
   mongo:
     image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=name
+      - MONGO_INITDB_ROOT_PASSWORD=word
     ports:
       - '27017:27017'
