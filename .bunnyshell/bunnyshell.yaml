@@ -1,0 +1,31 @@
+kind: Environment
+name: preview
+type: primary
+components:
+    -
+        kind: Application
+        name: app
+        gitRepo: 'https://github.com/jgazegers/avans-devops-2324-daan-jeroen.git'
+        gitBranch: main
+        gitApplicationPath: /
+        dockerCompose:
+            build:
+                context: .
+                dockerfile: Dockerfile
+            ports:
+                - '3000:3000'
+        hosts:
+            -
+                hostname: 'app-{{ env.base_domain }}'
+                path: /
+                servicePort: 3000
+    -
+        kind: Database
+        name: mongo
+        dockerCompose:
+            environment:
+                MONGO_INITDB_ROOT_PASSWORD: word
+                MONGO_INITDB_ROOT_USERNAME: name
+            image: mongo
+            ports:
+                - '27017:27017'
