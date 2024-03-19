@@ -1,0 +1,9 @@
+groups:
+  - name: DemoAlertsz
+    rules:
+     - alert: "on app down"
+       expr: up{job="app"} < 1
+       for: 30s
+     - alert: "APP SLOW"
+       expr: http_requests_duration_seconds_sum{job="app", path="/users"} > 2
+       for: 20s

@@ -4,11 +4,25 @@ services:
   app:
     build: .
     ports:
-      - '3000:3000'
+      - '3001:3001'
     volumes:
       - './:/app:rw,cached'
     depends_on:
       - mongo
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./:/prometheus:/etc/prometheus
+      - ./:/prometheus-data:./prometheus
+    ports:
+      - 9090:9090
+    command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
+
+  grafana:
+    build: ./grafana
+    ports: 
+      - 3000:3000
 
   mongo:
     image: mongo
@@ -22,3 +36,4 @@ services:
 
 volumes:
   mongo_data:
+  prometheus-data:
