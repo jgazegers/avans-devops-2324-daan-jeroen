@@ -1,5 +1,5 @@
 groups:
-  - name: DemoAlertsz
+  - name: DemoAlerts
     rules:
      - alert: "on app down"
        expr: up{job="app"} < 1
