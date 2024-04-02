@@ -2,7 +2,7 @@ global:
   smtp_smarthost: 'smtp.gmail.com:587'
   smtp_from: 'daanakin@gmail.com'
   smtp_auth_username: 'daanakin@gmail.com'
-  smtp_auth_password: 'xjfkwpgadurodpun'
+  smtp_auth_password: 'eqbdotrjskjdszxb'
 
 receivers:
   - name: 'email-me'
@@ -11,15 +11,15 @@ receivers:
         headers:
           subject: 'Prometheus Alert: {{ .Status }}'
         html: |
-          Hello,
-          <p>
-          One or more Prometheus Alerts have been found:
-          <ul>
-
-          <li>{{ end }}---</li>
-          {{ end }}
-          </ul>
-          </p>
+          <html>
+            <body>
+              <p>Hello Daan van Bragt,</p>
+              <p>Currently there are one or more critical errors within the app.</p>
+              <p>Please check Prometheus for more insight into these issues.</p>
+              <p>Kind regards,</p>
+              <p>A.P.M.S.</p>
+            </body>
+          </html>
 
 route:
   receiver: 'email-me'
