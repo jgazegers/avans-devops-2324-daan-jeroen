@@ -1,0 +1,28 @@
+global:
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_from: 'daanakin@gmail.com'
+  smtp_auth_username: 'daanakin@gmail.com'
+  smtp_auth_password: 'xjfkwpgadurodpun'
+
+receivers:
+  - name: 'email-me'
+    email_configs:
+      - to: 'dws.vanbragt@student.avans.nl'
+        headers:
+          subject: 'Prometheus Alert: {{ .Status }}'
+        html: |
+          Hello,
+          <p>
+          One or more Prometheus Alerts have been found:
+          <ul>
+
+          <li>{{ end }}---</li>
+          {{ end }}
+          </ul>
+          </p>
+
+route:
+  receiver: 'email-me'
+  group_wait: '20s'
+  group_interval: '10m'
+  repeat_interval: '2h'

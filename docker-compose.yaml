@@ -24,6 +24,14 @@ services:
     depends_on:
       - app
 
+  alertmanager:
+    image: prom/alertmanager:latest
+    restart: always
+    ports:
+      - 9094:9094
+    volumes:
+      - ./prometheus/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+
   grafana:
     build: ./grafana
     ports: 
@@ -38,6 +46,8 @@ services:
       - '27017:27017'
     volumes:
       - mongo_data:/data/db
+
+  
 
 volumes:
   mongo_data:
