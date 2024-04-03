@@ -47,17 +47,6 @@ services:
       - '27017:27017'
     volumes:
       - mongo_data:/data/db
-    
-  mq-producer:
-    image: node
-
-    volumes:
-      - .:/app
-      
-    command: ["node", "/app/services/mq-service/producer.js"]
-
-    ports:
-      - 3002:3002
 
   mq-consumer:
     image: node
@@ -66,6 +55,9 @@ services:
       - .:/app
 
     command: ["node", "/app/services/mq-service/consumer.js"]
+
+    depends_on:
+      - rabbitmq
 
   rabbitmq:
     image: rabbitmq:latest

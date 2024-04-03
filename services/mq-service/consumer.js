@@ -1,23 +1,13 @@
-const amqp = require('amqplib');
+const createRabbitMQChannel = require('../rabbitmq');
 
 async function consumeMessages() {
     try {
-        // Connect to RabbitMQ server
-        const connection = await amqp.connect('amqp://rabbitmq');
-        const channel = await connection.createChannel();
+        const channel = await createRabbitMQChannel();
 
-        // Declare the queue
-        const queue = 'myQueue';
-        await channel.assertQueue(queue, { durable: false });
-
-        // Consume messages from the queue
-        channel.consume(queue, (message) => {
-            const content = message.content.toString();
-            console.log(`Received message: ${content}`);
-
-            // Acknowledge the message
-            channel.ack(message);
-        });
+        channel.assertQueue('myQueue', {durable: true});
+        channel.consume('myQueue', (message) => {
+            console.log(`Received message: ${message.content.toString()}`);
+        })
 
         console.log('Waiting for messages...');
     } catch (error) {
