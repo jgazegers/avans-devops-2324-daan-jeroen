@@ -16,16 +16,12 @@ services:
 
   prometheus:
     image: prom/prometheus:latest
-    restart: always
-    user: root
     volumes:
-      - ./:/etc/prometheus
-      - /prometheus-data:/prometheus
+      - ./prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
     ports:
       - 9090:9090
-    command: --web.enable-lifecycle --config.file=./prometheus/prometheus.yml
-    depends_on:
-      - app
+    command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
 
   alertmanager:
     image: prom/alertmanager:latest
