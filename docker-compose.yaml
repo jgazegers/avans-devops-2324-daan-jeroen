@@ -15,6 +15,7 @@ services:
   prometheus:
     image: prom/prometheus:latest
     restart: always
+    user: root
     volumes:
       - ./:/prometheus:/etc/prometheus
       - ./:/prometheus-data:./prometheus
