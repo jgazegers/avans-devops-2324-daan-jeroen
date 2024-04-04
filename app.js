@@ -18,6 +18,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var messageRouter = require('./routes/messages')
 //const { normalizePath } = require('express-prom-bundle/types');
 
 var app = express();
@@ -36,6 +37,7 @@ app.use(metricsMiddleware)
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/messages', messageRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
