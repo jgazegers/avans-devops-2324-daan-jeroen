@@ -3,8 +3,6 @@ version: '3.8'
 services:
   app:
     build: .
-    expose:
-      - 3001
     ports:
       - '3001:3001'
     environment:
@@ -15,20 +13,22 @@ services:
       - mongo
 
   prometheus:
-    build: ./prometheus
+    build:
+      context: ./prometheus
+      dockerfile: Dockerfile.prometheus
     volumes:
       - prometheus_data:/prometheus
     ports:
       - 9090:9090
     command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
-    
+
   alertmanager:
-    image: prom/alertmanager:latest
+    build:
+      context: ./prometheus
+      dockerfile: Dockerfile.alertmanager
     restart: always
     ports:
       - 9093:9093
-    volumes:
-      - ./prometheus/alertmanager.yml:/etc/alertmanager/alertmanager.yml
 
   grafana:
     build: ./grafana
