@@ -1,4 +1,5 @@
 const amqp = require('amqplib');
+const console = require('console');
 
 async function createRabbitMQChannel(retryCount = 5, retryDelay = 1000) {
     let retryAttempts = 0;
@@ -21,6 +22,7 @@ async function createRabbitMQChannel(retryCount = 5, retryDelay = 1000) {
                 // Exponential backoff
                 const delay = retryDelay * Math.pow(2, retryAttempts);
                 console.log(`Retrying in ${delay}ms...`);
+                // eslint-disable-next-line no-undef
                 await new Promise(resolve => setTimeout(resolve, delay));
                 return connectWithRetry();
             } else {
