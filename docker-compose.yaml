@@ -46,12 +46,9 @@ services:
       - mongo_data:/data/db
 
   mq-consumer:
-    image: node
-
-    volumes:
-      - .:/app
-
-    command: ["node", "/app/services/mq-service/consumer.js"]
+    build:
+      context: .
+      dockerfile: Dockerfile.mq-consumer
 
     depends_on:
       - rabbitmq
