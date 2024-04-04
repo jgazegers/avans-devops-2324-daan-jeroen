@@ -13,25 +13,22 @@ services:
       - mongo
 
   prometheus:
-    image: prom/prometheus:latest
-    restart: always
-    user: root
+    build:
+      context: ./prometheus
+      dockerfile: Dockerfile.prometheus
     volumes:
-      - ./:/prometheus:/etc/prometheus
-      - ./:/prometheus-data:./prometheus
+      - prometheus_data:/prometheus
     ports:
       - 9090:9090
-    command: --web.enable-lifecycle --config.file=./prometheus/prometheus.yml
-    depends_on:
-      - app
+    command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yml
 
   alertmanager:
-    image: prom/alertmanager:latest
+    build:
+      context: ./prometheus
+      dockerfile: Dockerfile.alertmanager
     restart: always
     ports:
       - 9093:9093
-    volumes:
-      - ./prometheus/alertmanager.yml:/etc/alertmanager/alertmanager.yml
 
   grafana:
     build: ./grafana
@@ -61,9 +58,9 @@ services:
 
   rabbitmq:
     image: rabbitmq:latest
+    ports: 5672:5672
 
   
-
 volumes:
   mongo_data:
-  prometheus-data:
+  prometheus_data:

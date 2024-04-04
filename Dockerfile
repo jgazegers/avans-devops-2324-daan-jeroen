@@ -6,8 +6,4 @@ COPY . .
 
 RUN npm install
 
-RUN npm install nodemon -g
-
-EXPOSE 5000
-
-CMD ["nodemon", "./bin/www"]
+CMD ["node", "./bin/www"]
