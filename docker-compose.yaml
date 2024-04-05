@@ -6,12 +6,12 @@ services:
       context: .
       dockerfile: ./Dockerfiles/Dockerfile.app
     ports:
-      - '3001:${APP_PORT}'
+      - '3001:${APP_PORT-3001}'
     environment:
-      - PORT=${APP_PORT}
-      - MONGO_USERNAME=${MONGO_USERNAME}
-      - MONGO_PASSWORD=${MONGO_PASSWORD}
-      - MONGO_ADDRESS=${MONGO_ADDRESS}
+      - PORT=${APP_PORT-3001}
+      - MONGO_USERNAME=${MONGO_USERNAME-username}
+      - MONGO_PASSWORD=${MONGO_PASSWORD-password}
+      - MONGO_ADDRESS=${MONGO_ADDRESS-mongo:27017}
     volumes:
       - './:/app:rw,cached'
     depends_on:
@@ -48,8 +48,8 @@ services:
     volumes:
       - mongo_data:/data/db
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME-username}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD-password}
 
   mq-consumer:
     build:
@@ -57,7 +57,7 @@ services:
       dockerfile: ./Dockerfiles/Dockerfile.mq-consumer
     
     environment:
-      - RABBITMQ_URL=${RABBITMQ_URL}
+      - RABBITMQ_URL=${RABBITMQ_URL-amqp://rabbitmq}
 
     depends_on:
       - rabbitmq
