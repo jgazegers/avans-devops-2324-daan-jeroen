@@ -1,0 +1,2 @@
+FROM prom/alertmanager:latest
+ADD ./prometheus/alertmanager.yml /etc/alertmanager/alertmanager.yml

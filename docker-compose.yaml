@@ -2,7 +2,9 @@ version: '3.8'
 
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: ./Dockerfiles/Dockerfile.app
     ports:
       - '3001:${APP_PORT}'
     environment:
@@ -17,8 +19,8 @@ services:
 
   prometheus:
     build:
-      context: ./prometheus
-      dockerfile: Dockerfile.prometheus
+      context: .
+      dockerfile: ./Dockerfiles/Dockerfile.prometheus
     volumes:
       - prometheus_data:/prometheus
     ports:
@@ -27,13 +29,15 @@ services:
 
   alertmanager:
     build:
-      context: ./prometheus
-      dockerfile: Dockerfile.alertmanager
+      context: .
+      dockerfile: ./Dockerfiles/Dockerfile.alertmanager
     ports:
       - 9093:9093
 
   grafana:
-    build: ./grafana
+    build:
+      context: .
+      dockerfile: ./Dockerfiles/Dockerfile.grafana
     ports: 
       - 3000:3000
 
@@ -50,7 +54,7 @@ services:
   mq-consumer:
     build:
       context: .
-      dockerfile: Dockerfile.mq-consumer
+      dockerfile: ./Dockerfiles/Dockerfile.mq-consumer
     
     environment:
       - RABBITMQ_URL=${RABBITMQ_URL}

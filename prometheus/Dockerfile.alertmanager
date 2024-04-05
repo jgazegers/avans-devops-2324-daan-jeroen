@@ -1,2 +1,0 @@
-FROM prom/alertmanager:latest
-ADD ./alertmanager.yml /etc/alertmanager/alertmanager.yml
