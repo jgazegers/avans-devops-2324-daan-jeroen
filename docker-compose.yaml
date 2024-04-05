@@ -4,9 +4,12 @@ services:
   app:
     build: .
     ports:
-      - '3001:3001'
+      - '3001:${APP_PORT}'
     environment:
-      - PORT=3001
+      - PORT=${APP_PORT}
+      - MONGO_USERNAME=${MONGO_USERNAME}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - MONGO_ADDRESS=${MONGO_ADDRESS}
     volumes:
       - './:/app:rw,cached'
     depends_on:
@@ -26,7 +29,6 @@ services:
     build:
       context: ./prometheus
       dockerfile: Dockerfile.alertmanager
-    restart: always
     ports:
       - 9093:9093
 
@@ -37,18 +39,21 @@ services:
 
   mongo:
     image: mongo
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=name
-      - MONGO_INITDB_ROOT_PASSWORD=word
     ports:
       - '27017:27017'
     volumes:
       - mongo_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
 
   mq-consumer:
     build:
       context: .
       dockerfile: Dockerfile.mq-consumer
+    
+    environment:
+      - RABBITMQ_URL=${RABBITMQ_URL}
 
     depends_on:
       - rabbitmq

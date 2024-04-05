@@ -1,13 +1,16 @@
 const amqp = require('amqplib');
 const console = require('console');
 
+const RABBITMQ_URL = process.env.RABBITMQ_URL;
+
 async function createRabbitMQChannel(retryCount = 5, retryDelay = 1000) {
     let retryAttempts = 0;
 
     async function connectWithRetry() {
         try {
             // Connect to RabbitMQ server
-            const connection = await amqp.connect('amqp://rabbitmq');
+            const connection = await amqp.connect(RABBITMQ_URL);
+            console.log(RABBITMQ_URL);
 
             // Create a channel
             const channel = await connection.createChannel();
